@@ -7,7 +7,9 @@ import Button from "@material-ui/core/Button";
 import { CssBaseline } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {},
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1
+  },
   toolBar: {},
   title: {
     flexGrow: 1,
@@ -26,44 +28,42 @@ export default function Header({ tabs }) {
   const classes = useStyles();
 
   return (
-    <>
-      {/* <CssBaseline /> */}
-      <AppBar position="static" color="default" className={classes.appBar}>
-        <Toolbar className={classes.toolBar}>
-          <Typography
-            className={classes.title}
-            variant="h5"
-            color="inherit"
-            noWrap
-          >
-            Event App
-          </Typography>
+    <AppBar position="fixed" color="default" className={classes.appBar}>
+      <Toolbar className={classes.toolBar}>
+        <Typography
+          className={classes.title}
+          variant="h5"
+          color="inherit"
+          noWrap
+        >
+          Event App
+        </Typography>
 
-          <Button
-            className={classes.logoutButton}
-            variant="contained"
-            color="secondary"
-            disableElevation
-          >
-            Log out
-          </Button>
-        </Toolbar>
+        <Button
+          className={classes.logoutButton}
+          variant="contained"
+          color="secondary"
+          disableElevation
+        >
+          Log out
+        </Button>
+      </Toolbar>
 
-        {tabs}
-        {/* {props.children} */}
-        {/* {isSuperAdmin ? (
+      {/* {tabs} */}
+
+      {/* {props.children} */}
+      {/* {isSuperAdmin ? (
           <SuperAdminTabs {...handleChange} {...currentTab} />
         ) : (
           <UserTabs {...handleChange} {...currentTab} />
         )} */}
 
-        {/* {() => showCurrentTab(isSuperAdmin, currentTab)} */}
+      {/* {() => showCurrentTab(isSuperAdmin, currentTab)} */}
 
-        {/* <Route exact path="/dashboard/calendar">
+      {/* <Route exact path="/dashboard/calendar">
           // {isLoggedIn ? <div>Calendar</div> : <Redirect to="/dashboard" />}
           //{" "}
         </Route> */}
-      </AppBar>
-    </>
+    </AppBar>
   );
 }

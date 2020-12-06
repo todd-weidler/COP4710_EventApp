@@ -3,12 +3,23 @@ import TextField from "@material-ui/core/TextField";
 import FormHelperText from "@material-ui/core/FormHelperText";
 
 export default function MyTextField(props) {
-  const { name, label, type, id, errorMsg, hasError, ...rest } = props;
+  const {
+    name,
+    label,
+    type,
+    id,
+    errorMsg,
+    hasError,
+    margin = "normal",
+    variant = "outlined",
+    ...rest
+  } = props;
   return (
     <>
       <TextField
-        variant="outlined"
-        margin="normal"
+        // variant="outlined"
+        variant={variant}
+        margin={margin}
         required
         fullWidth
         name={name}

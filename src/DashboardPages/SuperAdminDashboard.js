@@ -80,8 +80,8 @@
 //   );
 // }
 
-import React, { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory, useParams, Redirect } from "react-router-dom";
 import SuperAdminTabs from "./SuperAdminTabs";
 import Header from "./Header";
 import SuperAdminEventsPage from "./SuperAdminPages/SuperAdminEventsPage";
@@ -89,58 +89,69 @@ import SuperAdminLocationsPage from "./SuperAdminPages/SuperAdminLocationsPage";
 import SuperAdminUsersPage from "./SuperAdminPages/SuperAdminUsersPage";
 import SuperAdminCalendarPage from "./SuperAdminPages/SuperAdminCalendarPage";
 
-function showCurrentTab(tabIndex) {
+import SideBar from "./SuperAdminSideBar";
+import { CssBaseline } from "@material-ui/core";
+import SuperAdminRequestQueuePage from "./SuperAdminPages/SuperAdminRequestQueuePage";
+
+function showCurrentTab(tabIndex, subpage) {
+  if (!!subpage && tabIndex !== 1 && tabIndex !== 3) {
+    return <Redirect to="/404" />;
+  }
+
   switch (tabIndex) {
     case 0:
-      return <SuperAdminEventsPage />;
+      return <SuperAdminRequestQueuePage />;
     case 1:
-      return <SuperAdminLocationsPage />;
+      return <SuperAdminEventsPage subpage={subpage} />;
     case 2:
-      return <SuperAdminUsersPage />;
+      return <SuperAdminLocationsPage />;
     case 3:
+      return <SuperAdminUsersPage subpage={subpage} />;
+    case 4:
       return <SuperAdminCalendarPage />;
     default:
-      return null;
+      return <Redirect to="/404" />;
   }
 }
 
 export default function SuperAdminDashboard() {
-  const { page } = useParams();
+  const { page, subpage } = useParams();
   const history = useHistory();
 
-  const tabNames = ["events", "locations", "users", "calendar"];
+  const tabNames = ["queue", "events", "locations", "users", "calendar"];
 
-  // const pageToTabIndex = {
-  //   events: 0,
-  //   locations: 1,
-  //   users: 2,
-  //   calendar: 3
+  // const [currentTab, setCurrentTab] = useState(tabNames.indexOf(page));
+
+  // const handleTabChange = (event, newTabIndex) => {
+  //   history.push(`/superadmin/${tabNames[newTabIndex]}`);
+  //   setCurrentTab(newTabIndex);
   // };
 
-  const [currentTab, setCurrentTab] = useState(tabNames.indexOf(page));
+  const [currentPage, setCurrentPage] = useState(tabNames.indexOf(page));
 
-  const handleTabChange = (event, newTabIndex) => {
-    history.push(`/superadmin/dashboard/${tabNames[newTabIndex]}`);
-    setCurrentTab(newTabIndex);
+  const handlePageChange = (newPage) => {
+    console.log(newPage);
+    history.push(`/superadmin/${tabNames[newPage]}`);
+    setCurrentPage(newPage);
   };
 
+  // const tabToShow = showCurrentTab(currentPage);
+
   return (
-    <>
-      {/* <Header>
-        <SuperAdminTabs
-          currentTab={currentTab}
-          handleTabChange={handleTabChange}
-        />
-      </Header> */}
+    <div style={{ display: "flex" }}>
+      <CssBaseline />
       <Header
-        tabs={
-          <SuperAdminTabs
-            currentTab={currentTab}
-            handleTabChange={handleTabChange}
-          />
-        }
+      // tabs={
+      //   <SuperAdminTabs
+      //     currentTab={currentTab}
+      //     handleTabChange={handleTabChange}
+      //   />
+      // }
       />
-      {showCurrentTab(currentTab)}
-    </>
+      <SideBar handlePageChange={handlePageChange} currentPage={currentPage} />
+
+      {/* {!!tabToShow ? tabToShow : <Redirect to="/404" />} */}
+      {showCurrentTab(currentPage, subpage)}
+    </div>
   );
 }

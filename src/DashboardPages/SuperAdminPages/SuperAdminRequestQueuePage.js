@@ -1,28 +1,24 @@
 import React, { useState } from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-// import EventRequestsTable from "./EventRequestsTable";
-import AllEventsTable from "../AllEventsTable";
+import EventRequestsTable from "./EventRequestsTable";
 import Toolbar from "@material-ui/core/Toolbar";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    width: "80%",
-    // display: "flex",
-    // // justifyContent: "center",
+    width: "90%",
     marginTop: theme.spacing(5),
-    marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(3)
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2)
   }
 }));
 
-export default function SuperAdminEventsPage() {
+export default function SuperAdminRequestQueuePage() {
   const classes = useStyles();
 
   return (
     <div className={classes.paper}>
       <Toolbar />
-      <Toolbar />
-      <AllEventsTable />
+      <EventRequestsTable />
     </div>
   );
 }

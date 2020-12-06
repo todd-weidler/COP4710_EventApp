@@ -9,12 +9,12 @@ import { CssBaseline } from "@material-ui/core";
 
 export default function App() {
   // const [isNewUser, setNewUser] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [userInfo, setUserInfo] = useState({
     username: "",
     firstname: "",
     lastname: "",
-    isSuperAdmin: false
+    isSuperAdmin: true
   });
 
   const handleLogin = () => {
@@ -34,25 +34,17 @@ export default function App() {
             <Route exact path="/">
               {isLoggedIn ? (
                 userInfo.isSuperAdmin ? (
-                  <Redirect to="/superadmin/dashboard/events" />
+                  <Redirect to="/superadmin/events" />
                 ) : (
-                  <Redirect to="/user/dashboard/events" />
+                  <Redirect to="/user/events" />
                 )
               ) : (
                 <LoginPage />
               )}
             </Route>
 
-            <Redirect
-              exact
-              from="/superadmin/dashboard"
-              to="/superadmin/dashboard/events"
-            />
-            <Redirect
-              exact
-              from="/user/dashboard"
-              to="/user/dashboard/events"
-            />
+            <Redirect exact from="/superadmin" to="/superadmin/events" />
+            <Redirect exact from="/user" to="/user/events" />
 
             {/* <Route exact path="/dashboard/:page?">
             {isLoggedIn ? (
@@ -62,7 +54,7 @@ export default function App() {
             )}
           </Route> */}
 
-            <Route exact path="/user/dashboard/:page?">
+            <Route exact path="/user/:page?">
               {isLoggedIn ? (
                 !userInfo.isSuperAdmin ? (
                   <UserDashboard />
@@ -74,7 +66,7 @@ export default function App() {
               )}
             </Route>
 
-            <Route exact path="/superadmin/dashboard/:page?">
+            <Route exact path="/superadmin/:page?/:subpage?">
               {isLoggedIn ? (
                 userInfo.isSuperAdmin ? (
                   <SuperAdminDashboard />

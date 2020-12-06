@@ -8,3 +8,5 @@ export default function SuperAdminUsersPage() {
     </>
   );
 }
+
+// Username, first/last name, role(s)
