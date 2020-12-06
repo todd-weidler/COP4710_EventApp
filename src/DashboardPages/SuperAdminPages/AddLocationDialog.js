@@ -14,8 +14,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(0),
     paddingTop: theme.spacing(0),
     paddingBottom: theme.spacing(0)
-    // marginLeft: theme.spacing(1),
-    // marginRight: theme.spacing(1)
   }
 }));
 
@@ -141,7 +139,7 @@ export default function AddLocationDialog({
         <Button onClick={() => handleClose(handleReset)} color="primary">
           Cancel
         </Button>
-        <Button onClick={() => handleSubmit(handleReset)} color="primary">
+        <Button onClick={handleSubmit} color="primary">
           Add
         </Button>
       </DialogActions>

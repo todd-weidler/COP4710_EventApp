@@ -153,7 +153,7 @@ export default function SuperAdminLocationsPage() {
     setLocationsData(dummyLocationData);
   }, []);
 
-  const handleSubmit = (values, handleReset) => {
+  const handleSubmit = (values) => {
     let idNum = locationsData.length + 1;
     let id = `loc${idNum}`;
     let newLocation = {
@@ -163,9 +163,9 @@ export default function SuperAdminLocationsPage() {
 
     // newLocation.locationId = id;
 
+    console.log("HERERE");
     setLocationsData((current) => [newLocation, ...current]);
     setIsOpen(false);
-    handleReset();
   };
 
   const handleOpen = () => {
@@ -200,8 +200,9 @@ export default function SuperAdminLocationsPage() {
             country: "",
             zipcode: ""
           }}
-          onSubmit={(values, actions) => {
+          onSubmit={(values, { resetForm }) => {
             handleSubmit(values);
+            resetForm({});
           }}
           validationSchema={addLocationSchema}
           validateOnChange
