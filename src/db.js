@@ -6,29 +6,34 @@ const { Connection, Request } = require("tedious");
 const config = {
   authentication: 
   {
-	options: 
-	{
-      userName: "", // Enter Username
-      password: "" //Enter Password
+    options: 
+    {
+      userName: "", // Enter Server Username
+      password: ""  // Enter Server Password
     },
     type: "default"
   },
-  server: "", // Enter Server Name
+  server: "", // Enter server name
   options: 
   {
     database: "events_db", 
-	encrypt: true,
-	validateBulkLoadParameters: true
+    encrypt: true,
+    validateBulkLoadParameters: true
   }
 };
 
-// SQL Script variable
-var script = 'SELECT * FROM temp_table';
+// SQL Query variable
+// Connects to modules in query.js
+var script = require('./query');
+
+// Call a specific query module - this instance calls the Host Event module,
+// which returns the events for the host whose username is passed in
+var query = script.HostEvents('aaaa');
 
 // Azure SQL Server Connection variable
 const conn = connectDB();
 
-// Attempt to connect and execute queries if connection goes through
+// Attempt to connect and execute query if connection goes through
 conn.on("connect", err => 
 {
 	if (err) 
@@ -37,7 +42,7 @@ conn.on("connect", err =>
 	} 
 	else
 	{
-	queryDatabaseRows(conn, script);
+    queryDatabaseRows(conn, query);
 	}
 });
 
@@ -54,10 +59,12 @@ function connectDB()
 }
 
 
-// Query Database Function
+// Query Database Rows Function
+// May need to change to return json file to front end
+// Currently returns results to console
 function queryDatabaseRows(connect, cmd) 
 {
-  console.log("Reading rows from the Table...");
+  //console.log("Reading rows from the Table...");
 
   // Read all rows from table
   const request = new Request(
@@ -70,10 +77,9 @@ function queryDatabaseRows(connect, cmd)
 	  } 
 	  else 
 	  {
-        console.log(`${rowCount} row(s) returned`);
-      }
+        //console.log(`${rowCount} row(s) returned`);
     }
-  );
+  } );
 
   request.on("row", columns => 
   {
