@@ -9,10 +9,10 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import CalendarIcon from "@material-ui/icons/DateRangeOutlined";
-import LocationIcon from "@material-ui/icons/Room";
-import UsersIcon from "@material-ui/icons/People";
-import EventIcon from "@material-ui/icons/EventAvailableRounded";
-import RequestQueueIcon from "@material-ui/icons/Assignment";
+// import LocationIcon from "@material-ui/icons/Room";
+// import UsersIcon from "@material-ui/icons/People";
+import MyEventsIcon from "@material-ui/icons/EventSeat";
+import BrowseEventsIcon from "@material-ui/icons/EventAvailableRounded";
 
 // const drawerWidth = 240;
 
@@ -78,7 +78,7 @@ export default function UserSideBar({ handlePageChange, currentPage }) {
             onClick={() => handlePageChange(0)}
           >
             <ListItemIcon>
-              <RequestQueueIcon
+              <BrowseEventsIcon
                 className={currentPage === 0 ? classes.icon : null}
               />
             </ListItemIcon>
@@ -90,7 +90,9 @@ export default function UserSideBar({ handlePageChange, currentPage }) {
             onClick={() => handlePageChange(1)}
           >
             <ListItemIcon>
-              <EventIcon className={currentPage === 1 ? classes.icon : null} />
+              <MyEventsIcon
+                className={currentPage === 1 ? classes.icon : null}
+              />
             </ListItemIcon>
             <ListItemText primary={"My Events"} />
           </StyledListItem>
@@ -100,7 +102,7 @@ export default function UserSideBar({ handlePageChange, currentPage }) {
             onClick={() => handlePageChange(2)}
           >
             <ListItemIcon>
-              <LocationIcon
+              <CalendarIcon
                 className={currentPage === 2 ? classes.icon : null}
               />
             </ListItemIcon>

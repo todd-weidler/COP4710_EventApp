@@ -14,7 +14,7 @@ export default function App() {
     username: "",
     firstname: "",
     lastname: "",
-    isSuperAdmin: true
+    isSuperAdmin: false
   });
 
   const handleLogin = () => {
@@ -36,7 +36,7 @@ export default function App() {
                 userInfo.isSuperAdmin ? (
                   <Redirect to="/superadmin/events" />
                 ) : (
-                  <Redirect to="/user/events" />
+                  <Redirect to="/user/browse" />
                 )
               ) : (
                 <LoginPage />
@@ -44,7 +44,7 @@ export default function App() {
             </Route>
 
             <Redirect exact from="/superadmin" to="/superadmin/events" />
-            <Redirect exact from="/user" to="/user/events" />
+            <Redirect exact from="/user" to="/user/browse" />
 
             {/* <Route exact path="/dashboard/:page?">
             {isLoggedIn ? (
@@ -54,7 +54,7 @@ export default function App() {
             )}
           </Route> */}
 
-            <Route exact path="/user/:page?">
+            <Route exact path="/user/:page?/:subpage?">
               {isLoggedIn ? (
                 !userInfo.isSuperAdmin ? (
                   <UserDashboard />

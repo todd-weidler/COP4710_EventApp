@@ -140,17 +140,8 @@ export default function SuperAdminDashboard() {
   return (
     <div style={{ display: "flex" }}>
       <CssBaseline />
-      <Header
-      // tabs={
-      //   <SuperAdminTabs
-      //     currentTab={currentTab}
-      //     handleTabChange={handleTabChange}
-      //   />
-      // }
-      />
+      <Header />
       <SideBar handlePageChange={handlePageChange} currentPage={currentPage} />
-
-      {/* {!!tabToShow ? tabToShow : <Redirect to="/404" />} */}
       {showCurrentTab(currentPage, subpage)}
     </div>
   );

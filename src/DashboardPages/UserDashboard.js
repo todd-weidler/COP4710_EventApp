@@ -1,57 +1,63 @@
 import React, { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import UserEventsPage from "./UserPages/UserEventsPage";
+import { useHistory, useParams, Redirect } from "react-router-dom";
+import UserBrowseEventsPage from "./UserPages/UserBrowseEventsPage";
+import UserMyEventsPage from "./UserPages/UserMyEventsPage";
 import UserCalendarPage from "./UserPages/UserCalendarPage";
-import UserProfilePage from "./UserPages/UserProfilePage";
-import UserTabs from "./UserTabs";
+// import UserProfilePage from "./UserPages/UserProfilePage";
+import SideBar from "./UserSideBar";
+import { CssBaseline } from "@material-ui/core";
+// import UserTabs from "./UserTabs";
 import Header from "./Header";
 
-function showCurrentTab(tabIndex) {
+function showCurrentTab(tabIndex, subpage) {
+  if (!!subpage && tabIndex !== 1) {
+    return <Redirect to="/404" />;
+  }
+
   switch (tabIndex) {
     case 0:
-      return <UserEventsPage />;
+      return <UserBrowseEventsPage />;
     case 1:
-      return <UserCalendarPage />;
+      return <UserMyEventsPage subpage={subpage} />;
     case 2:
-      return <UserProfilePage />;
+      return <UserCalendarPage />;
+    // case 3:
+    //   return <UserProfilePage />;
     default:
-      return null;
+      return <Redirect to="/404" />;
   }
 }
 
 export default function UserDashboard() {
-  const { page } = useParams();
+  const { page, subpage } = useParams();
   const history = useHistory();
 
-  const tabNames = ["events", "calendar", "profile"];
+  const tabNames = ["browse", "myevents", "calendar"];
 
-  // const indexToTabName = {
-  //   events: 0,
-  //   calendar: 1,
-  //   profile: 2
-  // }
+  const [currentPage, setCurrentPage] = useState(tabNames.indexOf(page));
 
-  // const tabNameToIndex = {
-  //   0: "events",
-  //   1: "profile",
-  //   2: "calendar"
-  // }
-
-  const [currentTab, setCurrentTab] = useState(tabNames.indexOf(page));
-
-  const handleTabChange = (event, newTabIndex) => {
-    history.push(`/user/dashboard/${tabNames[newTabIndex]}`);
-    setCurrentTab(newTabIndex);
+  const handlePageChange = (newPage) => {
+    history.push(`/user/${tabNames[newPage]}`);
+    setCurrentPage(newPage);
+    console.log(newPage);
   };
 
   return (
     <>
-      <Header
+      {/* <Header
         tabs={
           <UserTabs currentTab={currentTab} handleTabChange={handleTabChange} />
         }
-      />
-      {showCurrentTab(currentTab)}
+      /> */}
+      <div style={{ display: "flex" }}>
+        <CssBaseline />
+        <Header />
+        <SideBar
+          handlePageChange={handlePageChange}
+          currentPage={currentPage}
+        />
+        {showCurrentTab(currentPage, subpage)}
+      </div>
     </>
   );
 }

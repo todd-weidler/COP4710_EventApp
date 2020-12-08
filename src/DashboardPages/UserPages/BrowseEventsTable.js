@@ -6,17 +6,43 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { makeStyles } from "@material-ui/core/styles";
-import useTableSearch from "../useTableSearch";
+import { fade } from "@material-ui/core/styles/colorManipulator";
+import Button from "@material-ui/core/Button";
+import useTableSearch from "../../useTableSearch";
 import Toolbar from "@material-ui/core/Toolbar";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import Collapse from "@material-ui/core/Collapse";
-import OpenIcon from "@material-ui/icons/KeyboardArrowDown";
-import CloseIcon from "@material-ui/icons/KeyboardArrowUp";
-import Box from "@material-ui/core/Box";
+import DeleteEventIcon from "@material-ui/icons/DeleteForever";
+import JoinEventIcon from "@material-ui/icons/Add";
+import LeaveEventIcon from "@material-ui/icons/Clear";
+
+// const myEvents = [
+//   { "Theatre Play": "participant" },
+//   { "Theatre Play 1": "host" },
+//   { "Theatre Play 2": "participant" },
+//   { "Theatre Play 3": "participant" }
+// ];
+
+// function alpha(color, value){
+
+// }
+
+const dummyJoinedEvents = [
+  "Theatre Play 2",
+  "Theatre Play 5",
+  "Theatre Play 7",
+  "Homeless Event"
+];
+
+const dummyHostedEvents = ["Theatre Play 3", "Football Game"];
+
+// let myEvents = new Map();
+// myEvents.set("Theatre Play 1", "participant");
+// myEvents.set("Theatre Play 2", "participant");
+// myEvents.set("Theatre Play 3", "admin");
+// myEvents.set("Theatre Play 4", "participant");
+// myEvents.set("Theatre Play 5", "admin");
 
 const dummyData = [
   {
@@ -26,8 +52,7 @@ const dummyData = [
     website: "theatre.ucf.edu",
     date: new Date(2020, 11, 15),
     startTime: 1200,
-    endTime: 1500,
-    description: "This is a fake description. Blah blah blah blah....."
+    endTime: 1500
   },
   {
     eventName: "Football Game",
@@ -36,8 +61,7 @@ const dummyData = [
     website: "knightsfootball.ucf.edu",
     date: new Date(2020, 11, 21),
     startTime: 1500,
-    endTime: 1900,
-    description: "This is a fake description. Blah blah blah blah....."
+    endTime: 1900
   },
   {
     eventName: "Homeless Event",
@@ -46,8 +70,7 @@ const dummyData = [
     website: "salvationarmy.org",
     date: new Date(2020, 11, 2),
     startTime: 800,
-    endTime: 1100,
-    description: "This is a fake description. Blah blah blah blah....."
+    endTime: 1100
   },
   {
     eventName: "Theatre Play 2",
@@ -56,8 +79,7 @@ const dummyData = [
     website: "theatre.ucf.edu",
     date: new Date(2020, 11, 15),
     startTime: 1200,
-    endTime: 1500,
-    description: "This is a fake description. Blah blah blah blah....."
+    endTime: 1500
   },
   {
     eventName: "Theatre Play 3",
@@ -66,8 +88,7 @@ const dummyData = [
     website: "theatre.ucf.edu",
     date: new Date(2020, 11, 15),
     startTime: 1200,
-    endTime: 1500,
-    description: "This is a fake description. Blah blah blah blah....."
+    endTime: 1500
   },
   {
     eventName: "Theatre Play 4",
@@ -76,8 +97,7 @@ const dummyData = [
     website: "theatre.ucf.edu",
     date: new Date(2020, 11, 15),
     startTime: 1200,
-    endTime: 1500,
-    description: "This is a fake description. Blah blah blah blah....."
+    endTime: 1500
   },
   {
     eventName: "Theatre Play 5",
@@ -86,8 +106,7 @@ const dummyData = [
     website: "theatre.ucf.edu",
     date: new Date(2020, 11, 15),
     startTime: 1200,
-    endTime: 1500,
-    description: "This is a fake description. Blah blah blah blah....."
+    endTime: 1500
   },
   {
     eventName: "Theatre Play 6",
@@ -96,8 +115,7 @@ const dummyData = [
     website: "theatre.ucf.edu",
     date: new Date(2020, 11, 15),
     startTime: 1200,
-    endTime: 1500,
-    description: "This is a fake description. Blah blah blah blah....."
+    endTime: 1500
   },
   {
     eventName: "Theatre Play 7",
@@ -106,8 +124,7 @@ const dummyData = [
     website: "theatre.ucf.edu",
     date: new Date(2020, 11, 15),
     startTime: 1200,
-    endTime: 1500,
-    description: "This is a fake description. Blah blah blah blah....."
+    endTime: 1500
   },
   {
     eventName: "Theatre Play 8",
@@ -116,8 +133,7 @@ const dummyData = [
     website: "theatre.ucf.edu",
     date: new Date(2020, 11, 15),
     startTime: 1200,
-    endTime: 1500,
-    description: "This is a fake description. Blah blah blah blah....."
+    endTime: 1500
   },
   {
     eventName: "Theatre Play 9",
@@ -126,8 +142,7 @@ const dummyData = [
     website: "theatre.ucf.edu",
     date: new Date(2020, 11, 15),
     startTime: 1200,
-    endTime: 1500,
-    description: "This is a fake description. Blah blah blah blah....."
+    endTime: 1500
   },
   {
     eventName: "Theatre Play 10",
@@ -136,8 +151,7 @@ const dummyData = [
     website: "theatre.ucf.edu",
     date: new Date(2020, 11, 15),
     startTime: 1200,
-    endTime: 1500,
-    description: "This is a fake description. Blah blah blah blah....."
+    endTime: 1500
   },
   {
     eventName: "Theatre Play 11",
@@ -146,8 +160,7 @@ const dummyData = [
     website: "theatre.ucf.edu",
     date: new Date(2020, 11, 15),
     startTime: 1200,
-    endTime: 1500,
-    description: "This is a fake description. Blah blah blah blah....."
+    endTime: 1500
   }
 ];
 
@@ -178,30 +191,51 @@ function getFormattedTime(time) {
   return str;
 }
 
+const color = 4;
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: "100%"
+    maxWidth: "100%",
+    // display: "flex",
+    // // justifyContent: "center"
+    padding: color
   },
   container: {
     height: 450,
     overflowY: "auto"
   },
-  approveButton: {
-    color: "green",
+  joinButton: {
+    // color: "blue",
     textTransform: "none",
-    margin: theme.spacing(0)
+    margin: theme.spacing(0),
+    minWidth: "70px"
   },
-  rejectButton: {
-    color: "red",
+  leaveButton: {
+    // color: "red",
     textTransform: "none",
-    margin: theme.spacing(0)
+    margin: theme.spacing(0),
+    minWidth: "70px"
+  },
+  deleteButton: {
+    color: "white",
+    backgroundColor: "#f44336",
+    textTransform: "none",
+    margin: theme.spacing(0),
+    minWidth: "70px",
+    "&:hover": {
+      backgroundColor: "#d32f2f"
+    }
   },
   headerCell: {
+    // margin: theme.spacing(0),
+    // padding: theme.spacing(0),
+    // paddingLeft: theme.spacing(1.5),
     paddingLeft: "16px",
     paddingRight: "16px",
     fontWeight: "bold"
   },
   cell: {
+    // margin: theme.spacing(0),
     paddingLeft: "16px",
     paddingRight: "16px"
   },
@@ -213,12 +247,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1)
   },
   searchBar: {
+    // flexGrow: 1
+
     flex: "0 1 40%"
-  },
-  row: {
-    "& > *": {
-      borderBottom: "unset"
-    }
   }
 }));
 
@@ -236,6 +267,10 @@ const filterByAny = (currentSearch) => (el) => {
 export default function EventRequestsTable() {
   const classes = useStyles();
   const [events, setEvents] = useState([]);
+
+  const [joinedEvents, setJoinedEvents] = useState([]);
+  const [hostedEvents, setHostedEvents] = useState([]);
+
   const [emptyRows, setEmptyRows] = useState(0);
 
   const [
@@ -254,23 +289,51 @@ export default function EventRequestsTable() {
   }, [filteredRows]);
 
   useEffect(() => {
-    // api call
+    // api calls
     setEvents(dummyData);
+    setJoinedEvents(dummyJoinedEvents);
+    setHostedEvents(dummyHostedEvents);
   }, []);
 
-  const handleReject = (e, name) => {
-    console.log(name);
+  const handleJoin = (name) => {
+    // api calls
 
+    setJoinedEvents((current) => [name, ...current]);
+  };
+
+  const handleLeave = (name) => {
+    console.log(events);
+
+    let updatedJoinedEvents = [];
+
+    let indexInJoined = joinedEvents.findIndex((ev) => ev === name);
+
+    console.log(indexInJoined);
+
+    if (indexInJoined !== -1) {
+      // api calls
+
+      if (indexInJoined === 0) {
+        updatedJoinedEvents = updatedJoinedEvents.concat(joinedEvents.slice(1));
+      } else {
+        updatedJoinedEvents = updatedJoinedEvents.concat(
+          joinedEvents.slice(0, indexInJoined),
+          joinedEvents.slice(indexInJoined + 1)
+        );
+      }
+
+      setJoinedEvents(updatedJoinedEvents);
+    } else {
+      console.log("ERROR: Event not found in joinedEvents array ");
+    }
+  };
+
+  const handleDeleteEvent = (name) => {
     let updatedList = [];
-    // let eventIndex = events.indexOf(name);
-
     let eventIndex = events.findIndex((ev) => ev.eventName === name);
 
-    console.log(eventIndex);
-
     if (eventIndex !== -1) {
-      // do some api call to add the event to the list of rejected events for the particular admin
-      // as well as another call to remove the event from the list of pending events for the superadmin
+      // api calls
 
       if (eventIndex === 0) {
         updatedList = updatedList.concat(events.slice(1));
@@ -287,33 +350,15 @@ export default function EventRequestsTable() {
     }
   };
 
-  const handleApprove = (name) => {
-    console.log(name);
-
-    let updatedList = [];
-    // let eventIndex = events.indexOf(name);
-
-    let eventIndex = events.findIndex((ev) => ev.eventName === name);
-
-    console.log(eventIndex);
-
-    if (eventIndex !== -1) {
-      // do some api call to add the event to the list of rejected events for the particular admin
-      // as well as another call to remove the event from the list of pending events for the superadmin
-
-      if (eventIndex === 0) {
-        updatedList = updatedList.concat(events.slice(1));
-      } else {
-        updatedList = updatedList.concat(
-          events.slice(0, eventIndex),
-          events.slice(eventIndex + 1)
-        );
-      }
-
-      setEvents(updatedList);
-    } else {
-      console.log("ERROR: Event not found");
+  const getUserRole = (eventName) => {
+    if (joinedEvents.includes(eventName)) {
+      return "Participant";
     }
+
+    if (hostedEvents.includes(eventName)) {
+      return "Admin";
+    }
+    return "N/A";
   };
 
   return (
@@ -338,7 +383,6 @@ export default function EventRequestsTable() {
         <Table id={"eventsTable"} size="small" stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell style={{ minWidth: 62 }} />
               <TableCell
                 style={{ minWidth: 150 }}
                 className={classes.headerCell}
@@ -358,13 +402,13 @@ export default function EventRequestsTable() {
                 Admin Username
               </TableCell>
               <TableCell
-                style={{ minWidth: 176 }}
+                style={{ minWidth: 160 }}
                 className={classes.headerCell}
               >
                 Event Website
               </TableCell>
               <TableCell
-                style={{ minWidth: 107 }}
+                style={{ minWidth: 102 }}
                 className={classes.headerCell}
               >
                 Date
@@ -383,61 +427,82 @@ export default function EventRequestsTable() {
               >
                 End Time
               </TableCell>
-              {/* <TableCell
+              <TableCell
                 style={{ minWidth: 185 }}
                 align={"center"}
                 className={classes.headerCell}
               >
                 Actions
-              </TableCell> */}
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredRows.map((event) => (
-              <EventRow key={event.eventName} event={event} />
-              // <TableRow key={event.eventName}>
-              //   <TableCell className={classes.cell}>
-              //     {event.eventName}
-              //   </TableCell>
-              //   <TableCell className={classes.cell}>{event.location}</TableCell>
-              //   <TableCell className={classes.cell}>
-              //     {event.adminUsername}
-              //   </TableCell>
-              //   <TableCell className={classes.cell}>{event.website}</TableCell>
-              //   <TableCell className={classes.cell}>
-              //     {getFormattedDate(event.date)}
-              //   </TableCell>
-              //   <TableCell align={"center"} className={classes.cell}>
-              //     {getFormattedTime(event.startTime)}
-              //   </TableCell>
-              //   <TableCell align={"center"} className={classes.cell}>
-              //     {getFormattedTime(event.endTime)}
-              //   </TableCell>
-              //   <TableCell
-              //     align="center"
-              //     className={classes.actionsButtonsCell}
-              //   >
-              //     <div>
-              //       <Button
-              //         onClick={() => handleApprove(event.eventName)}
-              //         size="small"
-              //         className={classes.approveButton}
-              //         startIcon={<ApproveIcon className={classes.acceptIcon} />}
-              //       >
-              //         Approve
-              //       </Button>
-              //       <Button
-              //         onClick={(e) => handleReject(e, event.eventName)}
-              //         size="small"
-              //         className={classes.rejectButton}
-              //         startIcon={<RejectIcon />}
-              //       >
-              //         Reject
-              //       </Button>
-              //     </div>
-              //   </TableCell>
-              // </TableRow>
-            ))}
+            {filteredRows.map((event) => {
+              const role = getUserRole(event.eventName);
+
+              return (
+                <TableRow key={event.eventName} style={{ height: 50 }}>
+                  <TableCell className={classes.cell}>
+                    {event.eventName}
+                  </TableCell>
+                  <TableCell className={classes.cell}>
+                    {event.location}
+                  </TableCell>
+                  <TableCell className={classes.cell}>
+                    {event.adminUsername}
+                  </TableCell>
+                  <TableCell className={classes.cell}>
+                    {event.website}
+                  </TableCell>
+                  <TableCell className={classes.cell}>
+                    {getFormattedDate(event.date)}
+                  </TableCell>
+                  <TableCell align={"center"} className={classes.cell}>
+                    {getFormattedTime(event.startTime)}
+                  </TableCell>
+                  <TableCell align={"center"} className={classes.cell}>
+                    {getFormattedTime(event.endTime)}
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    className={classes.actionsButtonsCell}
+                  >
+                    <div>
+                      {role === "Participant" ? (
+                        <Button
+                          onClick={() => handleLeave(event.eventName)}
+                          size="small"
+                          variant="outlined"
+                          color="primary"
+                          className={classes.leaveButton}
+                        >
+                          Leave
+                        </Button>
+                      ) : role === "Admin" ? (
+                        <Button
+                          onClick={() => handleDeleteEvent(event.eventName)}
+                          size="small"
+                          variant="contained"
+                          className={classes.deleteButton}
+                        >
+                          Delete
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={() => handleJoin(event.eventName)}
+                          size="small"
+                          variant="contained"
+                          color="primary"
+                          className={classes.joinButton}
+                        >
+                          Join
+                        </Button>
+                      )}
+                    </div>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
             {emptyRows > 0 && (
               <TableRow style={{ height: 45 * emptyRows }}>
                 <TableCell align="center" colSpan={8}>
@@ -451,70 +516,3 @@ export default function EventRequestsTable() {
     </div>
   );
 }
-
-function EventRow({ event }) {
-  const classes = useStyles();
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <>
-      <TableRow className={classes.row}>
-        <TableCell className={classes.cell}>
-          <IconButton size="small" onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <CloseIcon /> : <OpenIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell className={classes.cell}>{event.eventName}</TableCell>
-        <TableCell className={classes.cell}>{event.location}</TableCell>
-        <TableCell className={classes.cell}>{event.adminUsername}</TableCell>
-        <TableCell className={classes.cell}>{event.website}</TableCell>
-        <TableCell className={classes.cell}>
-          {getFormattedDate(event.date)}
-        </TableCell>
-        <TableCell align={"center"} className={classes.cell}>
-          {getFormattedTime(event.startTime)}
-        </TableCell>
-        <TableCell align={"center"} className={classes.cell}>
-          {getFormattedTime(event.endTime)}
-        </TableCell>
-        {/* <TableCell align="center" className={classes.actionsButtonsCell}>
-          <div>
-
-            
-            <Button
-              onClick={() => handleApprove(event.eventName)}
-              size="small"
-              className={classes.approveButton}
-              startIcon={<ApproveIcon className={classes.acceptIcon} />}
-            >
-              Approve
-            </Button>
-            <Button
-              onClick={(e) => handleReject(e, event.eventName)}
-              size="small"
-              className={classes.rejectButton}
-              startIcon={<RejectIcon />}
-            >
-              Reject
-            </Button>
-          </div>
-        </TableCell> */}
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} />
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
-          <Collapse in={isOpen} timeout="auto" unmountOnExit>
-            <Box margin={1} style={{ marginLeft: 0 }}>
-              <Typography variant="subtitle2" gutterBottom component="div">
-                Event Description:
-              </Typography>
-              {event.description}
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </>
-  );
-}
-
-// style={{ paddingLeft: 0}}
